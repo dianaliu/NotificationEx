@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+ id="org.apache.cordova.plugins.NotificationEx"
+ version="0.1.0">
+ <name>NotificationEx</name>
+ <description>
+  Control activity indicator and show loading overlay.
+  Forked from https://github.com/purplecabbage/phonegap-plugins/tree/master/iPhone/NotificationEx
+</description>
+<license>MIT</license>
+<keywords>phonegap,ios,status,activity</keywords>
+
+<js-module src="www/notificationEx.js" name="NotificationEx">
+  <merges target="navigator.notificationEx" />
+</js-module>
+
+<!-- ios -->
+<platform name="ios">
+  <config-file target="config.xml" parent="/*">
+    <feature name="NotificationEx">
+      <param name="ios-package" value="NotificationEx"/>
+    </feature>
+  </config-file>
+
+  <header-file src="src/ios/NotificationEx.h" />
+  <source-file src="src/ios/NotificationEx.m" />
+
+  <header-file src="src/ios/LoadingView.h" />
+  <source-file src="src/ios/LoadingView.m" />
+
+  <header-file src="src/ios/UIColor-Expanded.h" />
+  <source-file src="src/ios/UIColor-Expanded.m" />
+</platform>
+</plugin>

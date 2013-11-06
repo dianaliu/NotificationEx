@@ -4,40 +4,42 @@
 //
 //  Created by Michael Nachbaur on 16/04/09.
 //  Copyright 2009 Decaf Ninja Software. All rights reserved.
-//  
+//
 //  With modifications by Shazron Abdullah, Nitobi Software Inc.
 //
 
 #import "NotificationEx.h"
-#ifdef CORDOVA_FRAMEWORK
-    #import <Cordova/CDV.h>
-#else
-    #import "Cordova/CDV.h"
-#endif 
 #import "UIColor-Expanded.h"
-
+#import <Cordova/CDV.h>
 
 @implementation NotificationEx
 
 @synthesize loadingView;
 
-- (void)loadingStart:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)loadingStart:(CDVInvokedUrlCommand*)command
 {
 	if (self.loadingView != nil) {
 		return;
 	}
-	
+
 	CGFloat strokeOpacity, backgroundOpacity;
 	CGFloat boxLength = [NExLoadingView defaultBoxLength];
 	BOOL fullScreen = YES;
 	BOOL bounceAnimation = NO;
 	NSString* colorCSSString;
 	NSString* labelText;
-	
-	strokeOpacity = [[options objectForKey:@"strokeOpacity"] floatValue];
-	backgroundOpacity = [[options objectForKey:@"backgroundOpacity"] floatValue];
-	
-	id fullScreenValue = [options objectForKey:@"fullScreen"];
+
+  NSLog(command.arguments);
+
+
+	// strokeOpacity = [[options objectForKey:@"strokeOpacity"] floatValue];
+	// backgroundOpacity = [[options objectForKey:@"backgroundOpacity"] floatValue];
+
+  strokeOpacity = 1.0;
+  backgroundOpacity = 1.0;
+
+
+	// id fullScreenValue = [options objectForKey:@"fullScreen"];
 	if (fullScreenValue != nil)
 	{
 		fullScreen = [fullScreenValue boolValue];
@@ -46,29 +48,29 @@
 		}
 	}
 
-	id bounceAnimationValue = [options objectForKey:@"bounceAnimation"];
+	// id bounceAnimationValue = [options objectForKey:@"bounceAnimation"];
 	if (bounceAnimationValue != nil)
 	{
 		bounceAnimation = [bounceAnimationValue boolValue];
 	}
-	
-	colorCSSString = [options objectForKey:@"strokeColor"];
-	labelText = [options objectForKey:@"labelText"];
-	
+
+	// colorCSSString = [options objectForKey:@"strokeColor"];
+	// labelText = [options objectForKey:@"labelText"];
+
 	if (!labelText) {
 		labelText = [NExLoadingView defaultLabelText];
 	}
-	
+
 	UIColor* strokeColor = [NExLoadingView defaultStrokeColor];
-	
+
 	if (strokeOpacity <= 0) {
 		strokeOpacity = [NExLoadingView defaultStrokeOpacity];
-	} 
+	}
 
 	if (backgroundOpacity <= 0) {
 		backgroundOpacity = [NExLoadingView defaultBackgroundOpacity];
-	} 
-	
+	}
+
 	if (colorCSSString) {
 		UIColor* tmp = [UIColor colorWithName:colorCSSString];
 		if (tmp) {
@@ -79,18 +81,18 @@
 				strokeColor = tmp;
 			}
 		}
-	} 
-	
+	}
+
 	self.loadingView = [NExLoadingView loadingViewInView:[self viewController].view strokeOpacity:strokeOpacity
-									backgroundOpacity:backgroundOpacity 
-										  strokeColor:strokeColor fullScreen:fullScreen labelText:labelText 
+									backgroundOpacity:backgroundOpacity
+										  strokeColor:strokeColor fullScreen:fullScreen labelText:labelText
 									  bounceAnimation:bounceAnimation boxLength:boxLength];
-	
+
 	NSRange minMaxDuration = NSMakeRange(2, 3600);// 1 hour max? :)
 	NSString* durationKey = @"duration";
 	// the view will be shown for a minimum of this value if durationKey is not set
 	self.loadingView.minDuration = [options integerValueForKey:@"minDuration" defaultValue:minMaxDuration.location withRange:minMaxDuration];
-	
+
 	// if there's a duration set, we set a timer to close the view
 	if ([options valueForKey:durationKey]) {
 		NSTimeInterval duration = [options integerValueForKey:durationKey defaultValue:minMaxDuration.location withRange:minMaxDuration];
@@ -98,13 +100,13 @@
 	}
 }
 
-- (void)loadingStop:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)loadingStop:(CDVInvokedUrlCommand*)command
 {
-	if (self.loadingView != nil) 
+	if (self.loadingView != nil)
 	{
 		NSLog(@"Loading stop");
 		NSTimeInterval diff = [[NSDate date] timeIntervalSinceDate:self.loadingView.timestamp] - self.loadingView.minDuration;
-		
+
 		if (diff >= 0) {
 			[self.loadingView removeView]; // the superview will release (see removeView doc), so no worries for below
 			self.loadingView = nil;
@@ -114,19 +116,18 @@
 	}
 }
 
-- (void)activityStart:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)activityStart:(CDVInvokedUrlCommand*)command
 {
     NSLog(@"Activity starting");
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
 }
 
-- (void)activityStop:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)activityStop:(CDVInvokedUrlCommand*)command
 {
     NSLog(@"Activitiy stopping ");
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = NO;
 }
-
 
 @end

@@ -1,3 +1,8 @@
+### Updated 11/6/2013:
+- To install, `cordova plugin add https://github.com/dianaliu/NotificationEx.git`
+- To remove, `cordova plugin rm org.apache.cordova.plugins.NotificationEx`
+- Haven't updated the code to use arc yet, so after installation you must disable it for `LoadingView.m` under Target > Build Phases > Compile Sources with the flag `-fno-objc-arc`. See http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project
+
 ## NotificationEx - Adding the Plugin to your project ##
 
 These are removed functions from PhoneGap core (Notification.loadingStart/Stop, and Notification.activityStart/Stop)
