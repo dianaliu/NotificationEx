@@ -5,7 +5,7 @@
  version="0.1.0">
  <name>NotificationEx</name>
  <description>
-  Control activity indicator and show loading overlay.
+  Control activity indicator.
   Forked from https://github.com/purplecabbage/phonegap-plugins/tree/master/iPhone/NotificationEx
 </description>
 <license>MIT</license>
@@ -25,11 +25,5 @@
 
   <header-file src="src/ios/NotificationEx.h" />
   <source-file src="src/ios/NotificationEx.m" />
-
-  <header-file src="src/ios/LoadingView.h" />
-  <source-file src="src/ios/LoadingView.m" />
-
-  <header-file src="src/ios/UIColor-Expanded.h" />
-  <source-file src="src/ios/UIColor-Expanded.m" />
 </platform>
 </plugin>
