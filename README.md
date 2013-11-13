@@ -1,7 +1,20 @@
-### Updated 11/6/2013:
+### Updated 11/13/2013:
 - To install, `cordova plugin add https://github.com/dianaliu/NotificationEx.git`
+  - Oh, but ya know sometimes things get out of sync so you have to re-add the ios platform. Thank you [SO] (http://stackoverflow.com/a/19733423)!
+  ```bash
+
+    #!/bin/bash
+    echo "Killing xcode..."
+    kill $(ps aux | grep 'Xcode' | awk '{print $2}')
+    rm -r platforms/ios
+    rm plugins/ios.json
+    cordova platforms add ios
+    cordova build ios
+    open platforms/ios/*.xcodeproj
+  ``` 
+
 - To remove, `cordova plugin rm org.apache.cordova.plugins.NotificationEx`
-- Haven't updated the code to use arc yet, so after installation you must disable it for `LoadingView.m` under Target > Build Phases > Compile Sources with the flag `-fno-objc-arc`. See http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project
+- ~~Haven't updated the code to use arc yet, so after installation you must disable it for `LoadingView.m` under Target > Build Phases > Compile Sources with the flag `-fno-objc-arc`. See http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project~~ (Removed this feature)
 
 ## NotificationEx - Adding the Plugin to your project ##
 
