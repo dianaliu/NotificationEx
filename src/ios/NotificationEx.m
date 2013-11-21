@@ -15,14 +15,12 @@
 
 - (void)activityStart:(CDVInvokedUrlCommand*)command
 {
-    NSLog(@"Activity starting");
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
 }
 
 - (void)activityStop:(CDVInvokedUrlCommand*)command
 {
-    NSLog(@"Activitiy stopping ");
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = NO;
 }
